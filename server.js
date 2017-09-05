@@ -5,11 +5,18 @@ var io = require('socket.io')(http); // Here's where we include socket.io as a n
 
 // Serve the index page 
 app.get("/", function (request, response) {
-  response.sendFile(__dirname + '/index.html'); 
+  response.sendFile(__dirname + '/src/html/log-in.html');
 });
 
+app.get("/index.html", function (request, response) {
+    response.sendFile(__dirname + '/index.html');
+});
+
+
 // Serve the assets directory
-app.use('/assets',express.static('assets'))
+app.use('/assets',express.static('assets'));
+
+app.use('/src',express.static('src'));
 
 // Listen on port 5000
 app.set('port', (process.env.PORT || 5000));

@@ -1,0 +1,27 @@
+.home{
+    background:#0f0f0f url("../../assets/Home.jpg");
+    background-size: 100%;
+}
+.start{
+    display: flex;
+    text-align: center;
+    position: absolute;
+    /*nos posicionamos en el centro del navegador*/
+    top:50%;
+    left:50%;
+    /*indicamos que el margen izquierdo, es la mitad de la anchura*/
+    margin-left:-110px;
+    /*indicamos que el margen superior, es la mitad de la altura*/
+    margin-top:-90px;
+    padding:5px;
+    align-items: center;
+}
+#title_home{
+    color: white;
+    font: oblique bold 500% cursive;
+    text-align: center;
+}
+#nickname{
+    color: white;
+    font: oblique bold 150% cursive;
+}
