@@ -35,6 +35,7 @@ io.on('connection', function(socket){
 		// Broadcast a signal to everyone containing the updated players list
 		io.emit('update-players',players);
 	})
+
   
   // Listen for a disconnection and update our player table 
   socket.on('disconnect',function(state){
