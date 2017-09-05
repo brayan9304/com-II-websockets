@@ -50,7 +50,7 @@
         }
         </script>
         <script type="text/javascript">
-            var namePlayer = getGET().name;
+            var playerGet = getGET().name;
             var ASSET_URL = "assets/"
             //We first initialize the phaser game object
             var WINDOW_WIDTH = 1000;
@@ -62,7 +62,7 @@
             var socket; //Declare it in this scope, initialize in the `create` function
             var other_players = {};
             var player = {
-                name:namePlayer,
+                name:playerGet,
                 sprite:null,//Will hold the sprite when it's created
                 speed_x:0,// This is the speed it's currently moving at
                 speed_y:0,
@@ -169,7 +169,14 @@
                 game.camera.y = player.sprite.y - WINDOW_HEIGHT/2;
 
                 socket = io(); // This triggers the 'connection' event on the server
-                socket.emit('new-player',{x:player.sprite.x,y:player.sprite.y,angle:player.sprite.rotation,type:1})
+
+
+                socket.on('broadcast',function(data){
+                    console.log(data.namePlayer);
+                });
+
+
+                socket.emit('new-player',{name:player.name,x:player.sprite.x,y:player.sprite.y,angle:player.sprite.rotation,type:1})
                 // Listen for other players connecting
                 socket.on('update-players',function(players_data){
                     var players_found = {};

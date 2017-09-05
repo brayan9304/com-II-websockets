@@ -25,23 +25,32 @@ http.listen(app.get('port'), function(){
 });
 
 var players = {}; //Keeps a table of all players, the key is the socket id
-var bullet_array = []; // Keeps track of all the bullets to update them on the server 
+var bullet_array = []; // Keeps track of all the bullets to update them on the server
+var countPlayers=0;
 // Tell Socket.io to start accepting connections
 io.on('connection', function(socket){
+    countPlayers++;
 	// Listen for a new player trying to connect
 	socket.on('new-player',function(state){
 		console.log("New player joined with state:",state);
 		players[socket.id] = state;
 		// Broadcast a signal to everyone containing the updated players list
 		io.emit('update-players',players);
-	})
+        io.emit('broadcast',{ namePlayer: state.name + ' clients connected!'})
+	});
 
-  
+
+
+
+
+
+
   // Listen for a disconnection and update our player table 
   socket.on('disconnect',function(state){
+      countPlayers--;
     delete players[socket.id];
     io.emit('update-players',players);
-  }) 
+  });
   
   // Listen for move events and tell all other clients that something has moved 
   socket.on('move-player',function(position_data){
@@ -50,7 +59,7 @@ io.on('connection', function(socket){
     players[socket.id].y = position_data.y; 
     players[socket.id].angle = position_data.angle; 
     io.emit('update-players',players);
-  })
+  });
   
   // Listen for shoot-bullet events and add it to our bullet array
   socket.on('shoot-bullet',function(data){
@@ -62,7 +71,7 @@ io.on('connection', function(socket){
     }
     bullet_array.push(new_bullet);
   });
-})
+});
 
 // Update the bullets 60 times per frame and send updates 
 function ServerGameLoop(){
