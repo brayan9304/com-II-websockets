@@ -12,7 +12,7 @@
             body,html { /* Remove margins */
                 margin: 0;
                 position: relative;
-                background-color:#9FC7E1;
+                background-color:#d0b874;
             }
             canvas { /* Center the canvas */
                 margin: auto;
@@ -57,7 +57,7 @@
             var WINDOW_HEIGHT = window.innerHeight;
             var game = new Phaser.Game(WINDOW_WIDTH, WINDOW_HEIGHT, Phaser.AUTO, '', {preload:preload, create:create, update:GameLoop} );
             var WORLD_SIZE = {w:1000,h:window.innerHeight};
-            var water_tiles = [];
+            var field_tiles = [];
             var bullet_array = [];
             var socket; //Declare it in this scope, initialize in the `create` function
             var other_players = {};
@@ -127,7 +127,7 @@
 
             function preload(){
                 game.load.crossOrigin = "Anonymous";
-                game.stage.backgroundColor = "#3399DA";
+                game.stage.backgroundColor = "#d0b874";
 
                 // Load all the Tanks
 
@@ -141,17 +141,17 @@
                 //}
 
                 game.load.image('bullet', ASSET_URL + 'cannon_ball.png');
-                game.load.image('water', ASSET_URL + 'water_tile.png');
+                game.load.image('field', ASSET_URL + 'field_tile.png');
             }
 
             function create(){
-                // Create water tiles 
+                // Create field tiles
                 for(var i=0;i<=WORLD_SIZE.w/64+1;i++){
                     for(var j=0;j<=WORLD_SIZE.h/64+1;j++){
-                        var tile_sprite = game.add.sprite(i * 64, j * 64, 'water');
+                        var tile_sprite = game.add.sprite(i * 64, j * 64, 'field');
                         tile_sprite.anchor.setTo(0.5,0.5);
                         tile_sprite.alpha = 0.5;
-                        water_tiles.push(tile_sprite);
+                        field_tiles.push(tile_sprite);
                     }
                 }
 
